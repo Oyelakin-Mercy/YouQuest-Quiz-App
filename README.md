@@ -11,27 +11,6 @@ This **YouQuest Quiz App** allows users to select quiz categories, difficulty le
 • Review your answers after submission  
 • Restart or take a new quiz anytime  
 
-## Project Structure
-
-youquest/
-│
-├── app.py                     # Main Flask application
-├── requirements.txt            # Python dependencies
-│
-├── templates/                  # HTML templates
-│   ├── index.html              # Home page (category selection)
-│   ├── quiz.html               # Quiz question interface
-│   ├── results.html            # Result page
-│   └── review.html             # Review answers page
-│
-├── static/                     # Static assets
-│   ├── style.css               # Global stylesheet
-│   └── images/
-│       ├── main_background_1.png
-│       └── quiz_background.jpg
-│
-└── README.md                   # Project documentation
-
 ## Installation & Setup
 
 Follow these steps to run YouQuest locally:
