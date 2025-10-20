@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quizzly | Quiz</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+  <style>
+    body {
+        background: url('/static/images/quiz_background.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100%;
+        font-family: "Nunito", sans-serif;
+    }
+    .answer-btn {
+      border: 2px solid #673ab7;
+      padding: 1.5rem 1rem;
+      border-radius: 10px;
+      border: 1px solid #f4deae;
+      background-color: #292929;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+      flex: 1;
+      font-size: 1rem;
+      align-items: center;
+      display: flex;
+    }
+    .answers-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 1rem;
+      padding: 0 100px;
+    }
+    .answer-btn.selected {
+      background-color: #673ab7;
+    }
+    .answer-btn.correct {
+      background-color: #673ab7;
+      color: white;
+    }
+    .answer-btn.incorrect {
+      background-color: #e2746c;
+      color: white;
+    }
+    .controls, .result-controls {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+    .controls button {
+        background-color: #292929;
+        color: white;
+    }
+    .progress-container {
+      background-color: #353535;
+      height: 10px;
+      border-radius: 6px;
+      margin: 0 100px 2rem 100px;
+    }
+    .progress-bar {
+      background: #673ab7;
+      height: 10px;
+      width: 0%;
+      border-radius: 6px;
+      transition: width 0.3s ease;
+    }
+    .controls a {
+        background-color: #292929;
+        color: white;
+        text-align: center;
+        padding: 12px 59px;
+        cursor: pointer;
+        border-radius: 8px;
+        outline: none;
+        text-decoration: none;
+
+    }
+    .controls {
+        text-align: center;
+        margin: 2rem 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1 style="margin: 50px 0 20px 100px;">QuizQuest</h1>
+
+    <div class="progress-container">
+      <div id="progress-bar" class="progress-bar"></div>
+    </div>
+
+    <form id="quiz-form" method="post" action="{{ url_for('submit') }}">
+      <div id="quiz-area"></div>
+    <div style="display: flex; align-items: center; justify-content: space-around;">
+    <div class="controls">
+      <a href="{{ url_for('restart') }}">Go back</a>
+    </div>
+      <div class="controls">
+        <button type="submit" class="primary">Submit Quiz</button>
+      </div>
+    </div>
+    </form>
+
+  </div>
+
+  <script>
+    const quiz = {{ quiz|tojson }};
+    const quizArea = document.getElementById('quiz-area');
+    const progress = document.getElementById('progress-bar');
+    const total = quiz.questions.length;
+    const answered = new Set();
+
+    // --- Render all questions ---
+    quiz.questions.forEach((q, i) => {
+      const block = document.createElement('div');
+      block.classList.add('question-block');
+      block.innerHTML = `
+        <p style="padding: 0 100px"><b>Q${i + 1}:</b> ${q.question}</p>
+        <div class="answers-row">
+          ${q.answers.map(a => `
+            <button type="button" class="answer-btn" 
+                    data-qindex="${i}" data-value="${a}">
+              ${a}
+            </button>`).join('')}
+        </div>
+        <input type="hidden" name="answer_${i}" id="answer_${i}">
+      `;
+      quizArea.appendChild(block);
+    });
+
+    // --- Handle selection ---
+    document.querySelectorAll('.answer-btn').forEach(btn => {
+      btn.addEventListener('click', function () {
+        const qidx = this.dataset.qindex;
+        document.querySelectorAll(`.answer-btn[data-qindex="${qidx}"]`)
+                .forEach(b => b.classList.remove('selected'));
+        this.classList.add('selected');
+        document.getElementById(`answer_${qidx}`).value = this.dataset.value;
+        answered.add(qidx);
+        progress.style.width = `${(answered.size / total) * 100}%`;
+      });
+    });
+  </script>
+</body>
+</html>

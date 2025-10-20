@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz Review</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+  <style>
+    body {
+        background: url('/static/images/quiz_background.jpg');
+        font-family: "Nunito", sans-serif;
+        background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    }
+    .answer-btn {
+      border: 2px solid #673ab7;
+      padding: 1.5rem 1rem;
+      border-radius: 10px;
+      border: none;
+      background-color: #292929;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+      flex: 1;
+      font-size: 1rem;
+      align-items: center;
+      display: flex;
+    }
+    .answers-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 1rem;
+      padding: 0 100px;
+    }
+    .answer-btn.selected {
+      background-color: #673ab7;
+    }
+    .answer-btn.correct {
+      background-color: #673ab7;
+      color: white;
+    }
+    .answer-btn.incorrect {
+      background-color: #c9281c;
+      color: white;
+    }
+
+    .controls a {
+        background-color: #292929;
+        color: white;
+        text-align: center;
+        padding: 10px 50px;
+        cursor: pointer;
+        border-radius: 8px;
+        outline: none;
+        text-decoration: none;
+
+    }
+    .controls {
+        text-align: center;
+        margin: 2rem 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1 style="padding: 0 100px">Review Answers</h1>
+    <h2 style="text-align:center;">Score: {{ score }}/{{ total }}</h2>
+
+    {% for r in results %}
+      <div class="question-block">
+        <p style="padding: 0 100px"><b>Q{{ loop.index }}:</b> {{ r.question }}</p>
+        <div class="answers-row">
+          {% for a in r.answers %}
+            <div class="answer-btn
+              {% if a == r.correct %}correct{% elif a == r.user_answer %}incorrect{% endif %}">
+              {{ a }}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+
+    <div class="controls">
+      <a href="{{ url_for('restart') }}">Restart Quiz</a>
+    </div>
+  </div>
+</body>
+</html>
