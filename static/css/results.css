@@ -1,6 +1,6 @@
 body {
       font-family: "Nunito", sans-serif;
-      background: url('/static/images/quiz_background.jpg');
+      background: url('../images/quiz_background.jpg');
       color: #333;
       margin: 0;
       min-height: 100vh;

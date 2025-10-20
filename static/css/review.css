@@ -1,5 +1,5 @@
 body {
-        background: url('/static/images/quiz_background.jpg');
+        background: url('../images/quiz_background.jpg');
         font-family: "Nunito", sans-serif;
         background-size: cover;
     background-repeat: no-repeat;
