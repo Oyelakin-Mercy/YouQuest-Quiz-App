@@ -20,15 +20,21 @@ git clone https://github.com/yourusername/youquest.git
 cd youquest
 
 ### Create and activate a virtual environment
+```
 python -m venv venv
-venv\Scripts\activate    *On Windows*
-source venv/bin/activate  *On macOS/Linux*
+venv\Scripts\activate    #On Windows
+source venv/bin/activate  #On macOS/Linux
+```
 
 ### Install dependencies
+```
 pip install -r requirements.txt
+```
 
 ### Run the Flask app
+```
 python app.py
+```
 
 ### Open in your browser
 
