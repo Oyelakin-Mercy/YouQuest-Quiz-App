@@ -7,7 +7,7 @@ body {
     }
     .answer-btn {
       border: 2px solid #673ab7;
-      padding: 1.5rem 1rem;
+      padding: 1rem 1rem;
       border-radius: 10px;
       border: 1px solid #f4deae;
       background-color: #292929;
@@ -40,10 +40,7 @@ body {
       text-align: center;
       margin-top: 1.5rem;
     }
-    .controls button {
-        background-color: #292929;
-        color: white;
-    }
+
     .progress-container {
       background-color: #353535;
       height: 10px;
@@ -57,18 +54,28 @@ body {
       border-radius: 6px;
       transition: width 0.3s ease;
     }
-    .controls a {
+    .controls button, .controls a {
         background-color: #292929;
         color: white;
         text-align: center;
-        padding: 12px 59px;
         cursor: pointer;
         border-radius: 8px;
         outline: none;
         text-decoration: none;
-
+         margin: 2rem 0;
+         border: none;
     }
-    .controls {
-        text-align: center;
-        margin: 2rem 0;
+    .controls a {
+        padding: 12px 59px;
+    }
+    button {
+      border: none;
+      outline: none;
+    }
+    button:hover, .controls a:hover {
+        background-color: #121212;
+    }
+    .primary {
+      padding: 12px 59px;
+      font-size: 16px;
     }

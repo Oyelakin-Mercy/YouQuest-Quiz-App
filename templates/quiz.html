@@ -4,11 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Quizzly | Quiz</title>
+
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -21,17 +22,24 @@
 
     <form id="quiz-form" method="post" action="{{ url_for('submit') }}">
       <div id="quiz-area"></div>
-    <div style="display: flex; align-items: center; justify-content: space-around;">
-    <div class="controls">
-      <a href="{{ url_for('restart') }}">Go back</a>
-    </div>
-      <div class="controls">
-        <button type="submit" class="primary">Submit Quiz</button>
-      </div>
-    </div>
-    </form>
 
+      <div style="display: flex; align-items: center; justify-content: space-around;">
+        <div class="controls">
+          <a href="{{ url_for('restart') }}">Go back</a>
+        </div>
+        <div class="controls">
+          <button type="submit" class="primary">Submit Quiz</button>
+        </div>
+      </div>
+    </form>
   </div>
+
+  <!-- Pass the quiz data to JavaScript -->
+  <script>
+    const quiz = {{ quiz | tojson }};
+  </script>
+
+  <!-- Load your actual JS file -->
   <script src="{{ url_for('static', filename='js/quiz.js') }}"></script>
 </body>
 </html>

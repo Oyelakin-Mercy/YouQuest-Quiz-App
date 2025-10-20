@@ -1,8 +1,7 @@
-const quiz = {{ quiz|tojson }};
-    const quizArea = document.getElementById('quiz-area');
-    const progress = document.getElementById('progress-bar');
-    const total = quiz.questions.length;
-    const answered = new Set();
+const quizArea = document.getElementById('quiz-area');
+const progress = document.getElementById('progress-bar');
+const total = quiz.questions.length;
+const answered = new Set();
 
     // --- Render all questions ---
     quiz.questions.forEach((q, i) => {
