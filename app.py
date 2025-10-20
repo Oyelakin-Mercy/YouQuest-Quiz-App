@@ -22,7 +22,6 @@ def start_quiz():
     q_type = request.form.get("type", "")
     amount = request.form.get("amount", "5")
 
-    # Build API URL
     url = f"https://opentdb.com/api.php?amount={amount}"
     if category:
         url += f"&category={category}"
@@ -31,15 +30,20 @@ def start_quiz():
     if q_type:
         url += f"&type={q_type}"
 
-    data = requests.get(url).json()
+    try:
+        response = requests.get(url, timeout=10)
+        data = response.json()
+    except Exception as e:
+        print("Error fetching API:", e)
+        return "Error fetching quiz questions. Please try again later."
 
     if data.get("response_code") != 0:
+        print("API returned non-zero response:", data)
         return "Error fetching quiz questions. Please try again."
 
     questions = []
     for item in data["results"]:
         all_answers = item["incorrect_answers"] + [item["correct_answer"]]
-        # Sort alphabetically for consistent display (A, B, C, D)
         all_answers = sorted(all_answers)
         questions.append({
             "question": html.unescape(item["question"]),
